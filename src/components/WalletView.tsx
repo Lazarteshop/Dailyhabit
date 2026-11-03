@@ -79,7 +79,7 @@ export const WalletView: React.FC = () => {
             SIMULATED DUAL WALLET ARCHITECTURE — NO REAL MONEY / ZERO BILLING
           </p>
           <p className="text-slate-300 leading-relaxed">
-            All fiat and token balances displayed below are in-memory demo records. AI Coins are non-cash utility credits for AI SHOP creation and tier upgrades. AI Pocket Money represents simulated Philippine Peso creator earnings.
+            All fiat and token balances displayed below are in-memory demo records. AI Coins are non-cash utility credits for AI SHOP creation and tier upgrades. AI Pocket Money (AIPM): SIMULATED DEMO EQUIVALENCE ONLY — NO REAL STORED VALUE.
           </p>
         </div>
       </div>
@@ -146,12 +146,12 @@ export const WalletView: React.FC = () => {
               </div>
               <div>
                 <h2 className="text-base font-display font-bold text-white">AI Pocket Money (AIPM)</h2>
-                <span className="text-[10px] font-mono text-emerald-400">1 AIPM = 1.00 PHP (Fiat-Equivalent)</span>
+                <span className="text-[10px] font-mono text-emerald-400 font-semibold block">SIMULATED DEMO EQUIVALENCE ONLY — NO REAL STORED VALUE</span>
               </div>
             </div>
 
-            <span className="px-2.5 py-1 rounded-full bg-emerald-950 border border-emerald-400/50 text-[10px] font-mono font-bold text-emerald-300 uppercase tracking-wider">
-              CREATOR REWARD VALUE
+            <span className="px-2.5 py-1 rounded-full bg-emerald-950 border border-emerald-400/50 text-[9px] font-mono font-bold text-emerald-300 uppercase tracking-wider text-right">
+              SIMULATED DEMO EQUIVALENCE ONLY — NO REAL STORED VALUE
             </span>
           </div>
 
@@ -190,7 +190,7 @@ export const WalletView: React.FC = () => {
               className="py-2.5 px-3 bg-gradient-to-r from-emerald-600 to-cyan-600 hover:from-emerald-500 text-slate-950 font-bold rounded-xl text-xs shadow-lg shadow-emerald-500/20 transition-all flex items-center justify-center gap-1.5"
             >
               <ArrowUpRight className="w-3.5 h-3.5" />
-              <span>Withdraw to GCash</span>
+              <span>Simulated Withdrawal Preview</span>
             </button>
           </div>
         </div>
@@ -219,7 +219,7 @@ export const WalletView: React.FC = () => {
             <h3 className="font-display font-bold text-white text-base">Ledger Transaction Audit Trail</h3>
           </div>
           <span className="text-xs text-slate-500 font-mono">
-            {walletTransactions.length} Immutable Journals
+            {walletTransactions.length} Simulated Transaction History
           </span>
         </div>
 
@@ -395,7 +395,7 @@ export const WalletView: React.FC = () => {
             <div className="flex items-center justify-between pb-2 border-b border-slate-800">
               <div className="flex items-center gap-2">
                 <Wallet className="w-5 h-5 text-emerald-400" />
-                <h3 className="font-display font-bold text-white text-base">Withdraw to GCash</h3>
+                <h3 className="font-display font-bold text-white text-base">Simulated Withdrawal Preview</h3>
               </div>
               <button onClick={() => setIsWithdrawModalOpen(false)} className="text-slate-400 hover:text-white text-lg">
                 &times;

@@ -178,7 +178,7 @@ const INITIAL_POSTS: Post[] = [
           displayName: 'Kaelen Reyes',
           avatarUrl: HERO_AVATAR,
         },
-        content: 'Secured one using my creator earnings balance! Quality is phenomenal.',
+        content: 'Secured one using my demo balance! Quality is phenomenal. (DEMO ONLY)',
         createdAt: '1h ago',
       },
     ],
@@ -218,7 +218,7 @@ const INITIAL_REELS: Reel[] = [
       avatarUrl: HERO_AVATAR,
     },
     title: 'Neon Skyline Live Performance — Manila 2077',
-    caption: 'Synthesized cyber beats on a transparent holographic stage in Bonifacio Global City. Earn 5 AI Coins for watching complete 30s session!',
+    caption: 'Synthesized cyber beats on a transparent holographic stage in Bonifacio Global City. 5 AI Coins reward (DEMO ONLY — simulated demonstration session, no verified real-world views).',
     videoCoverUrl: REEL_COVER,
     viewsCount: 45280,
     likesCount: 3890,
@@ -235,7 +235,7 @@ const INITIAL_REELS: Reel[] = [
       avatarUrl: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=150&q=80',
     },
     title: 'Holographic Product Unboxing & Setup',
-    caption: 'How to unlock Tier 2 AI Shop using your watch rewards without spending cash. Step-by-step walkthrough.',
+    caption: 'How to unlock Tier 2 AI Shop using simulated demo rewards (DEMO ONLY). Step-by-step walkthrough.',
     videoCoverUrl: SHOP_PRODUCT,
     viewsCount: 31800,
     likesCount: 2450,
@@ -386,7 +386,7 @@ const INITIAL_CHAT_MESSAGES: ChatMessage[] = [
     timestamp: 'Just now',
     suggestedActions: [
       { label: 'Check AI Coins & Upgrade Shop', action: 'upgrade_shop' },
-      { label: 'Review Creator Earnings (AIPM)', action: 'view_wallet' },
+      { label: 'Review Demo AIPM Balance (DEMO ONLY)', action: 'view_wallet' },
       { label: 'Boost Reel with Ad Campaign', action: 'promote_post' },
       { label: 'View Philippine Settlement Rules', action: 'settlement_rules' },
     ],
@@ -414,15 +414,15 @@ export const DailyHabitProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   const [notifications, setNotifications] = useState([
     {
       id: 'notif_1',
-      title: 'Demo Creator Reward Allocated',
-      desc: '₱650.00 demo AIPM allocated to your simulated balance (Sample data only).',
+      title: 'DEMO ONLY — Simulated Reward Allocated',
+      desc: '₱650.00 demo AIPM allocated to your simulated balance (DEMO ONLY — sample data).',
       time: '1h ago',
       read: false,
     },
     {
       id: 'notif_2',
-      title: '5 Demo AI Coins Awarded',
-      desc: 'Added 5 demo AIC for simulated playback session. Strictly for demo AI SHOP tier upgrades!',
+      title: 'DEMO ONLY — 5 Demo AI Coins Awarded',
+      desc: 'Added 5 demo AIC for simulated playback session (DEMO ONLY). Strictly for demo AI SHOP tier upgrades!',
       time: '3h ago',
       read: false,
     },
@@ -617,7 +617,7 @@ export const DailyHabitProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     if (currentUser.wallets.aiCoinsBalance < requiredCoins) {
       return {
         success: false,
-        message: `Insufficient AI Coins. Upgrading to Tier ${targetTier} requires ${requiredCoins} AIC. (Current Balance: ${currentUser.wallets.aiCoinsBalance} AIC). Watch more video reels to earn AIC for free!`,
+        message: `Insufficient AI Coins. Upgrading to Tier ${targetTier} requires ${requiredCoins} AIC (DEMO ONLY). Watch more simulated demo reels to test AIC upgrades (DEMO ONLY)!`,
       };
     }
 
@@ -664,7 +664,7 @@ export const DailyHabitProvider: React.FC<{ children: React.ReactNode }> = ({ ch
       const deficitPhp = (product.priceAipmCentavos - currentUser.wallets.aiPocketMoneyCentavos) / 100;
       return {
         success: false,
-        message: `Insufficient AI Pocket Money. Need additional ₱${deficitPhp.toFixed(2)} AIPM to complete purchase. Top up your wallet via GCash first.`,
+        message: `Insufficient AI Pocket Money (DEMO ONLY — NO REAL STORED VALUE). Need additional ₱${deficitPhp.toFixed(2)} demo AIPM to complete simulated purchase.`,
       };
     }
 
@@ -875,7 +875,7 @@ export const DailyHabitProvider: React.FC<{ children: React.ReactNode }> = ({ ch
       let reply = "I analyzed your request through the DAILYHABIT neural engine. How else may I assist with your creator strategy?";
       let actions = [
         { label: 'Check AI Coins & Upgrade Shop', action: 'upgrade_shop' },
-        { label: 'Review Creator Earnings (AIPM)', action: 'view_wallet' },
+        { label: 'Review Demo AIPM Balance (DEMO ONLY)', action: 'view_wallet' },
       ];
 
       const lower = text.toLowerCase();
