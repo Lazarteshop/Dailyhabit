@@ -1,0 +1,6 @@
+{
+  "name": "DAILYHABIT — Futuristic AI Social & Creator-Commerce",
+  "description": "Futuristic holographic AI-powered social media and creator-commerce ecosystem with personal AI SOCMED, AI SHOP, AI Assistants, and dual wallet architecture.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

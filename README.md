@@ -1,11 +1,51 @@
-<div align="center">
+# DAILYHABIT — Phase 1B Frontend Implementation
 
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+Futuristic AI-powered social media and creator-commerce web application featuring Personal AI SOCMED profiles, AI SHOP, AI Assistant copilot, and a simulated dual wallet architecture.
 
-  <h1>Built with AI Studio</h2>
+## Phase 1B Implementation Scope
 
-  <p>The fastest path from prompt to production with Gemini.</p>
+This release is a **strictly frontend-only client-side demonstration**:
+- Built with **React 19**, **TypeScript**, **Vite**, and **Tailwind CSS**.
+- **In-memory React Context state**: All posts, reels playback, shop listings, wallet balances, and admin verification queues are simulated client-side.
+- **Zero-Billing Safety Boundary**: No paid Gemini API keys, Firebase provisioning, GCash webhooks, external databases, or real-money payment processors are configured or invoked.
 
-  <a href="https://aistudio.google.com/apps">Start building</a>
+## Getting Started (Local Development)
 
-</div>
+### Prerequisites
+- Node.js (v18 or higher)
+- npm or bun
+
+### Installation & Development Run
+
+1. Clone or navigate to the repository directory.
+2. Install frontend dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the Vite development server:
+   ```bash
+   npm run dev
+   ```
+4. Open your browser and navigate to `http://localhost:3000`.
+
+### Production Build & Linting
+
+- To validate TypeScript:
+  ```bash
+  npm run lint
+  ```
+- To produce an optimized production bundle:
+  ```bash
+  npm run build
+  ```
+- To preview the production bundle locally:
+  ```bash
+  npm run preview
+  ```
+
+## Architecture & Simulation Notices
+
+- **AI Coins (AIC)**: Non-cash utility credits used exclusively for simulated AI SHOP tier upgrades. Carries zero monetary value and cannot be withdrawn or converted to fiat.
+- **AI Pocket Money (AIPM)**: Simulated creator stored value demonstration (1 AIPM = ₱1.00 PHP). Withdrawal requests place funds into a simulated reservation queue with batch disbursements scheduled on the 5th and 20th of the month.
+- **Sample Data Only**: All treasury solvency metrics, receipt image previews, and ledger transactions are sample demonstration records and do not represent actual reserves or regulatory approvals.
+- **Persona Quick-Switcher**: The bottom-left persona switcher allows auditing different role perspectives (Creator User, Admin Assistant L1 screener, Main Admin L2 reviewer) via client-side state.
