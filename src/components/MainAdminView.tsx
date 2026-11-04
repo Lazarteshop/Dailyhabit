@@ -14,7 +14,6 @@ import {
   ArrowRight,
   Landmark,
   Scale,
-  Lock,
   Layers,
   History,
   TrendingUp,
@@ -39,13 +38,13 @@ export const MainAdminView: React.FC = () => {
     (r) => r.status === 'APPROVED' || r.status === 'REJECTED'
   );
 
-  // Simulated Demo Metrics (Fictional demonstration data)
-  const liquidVaultCashCentavos = 145000000; // ₱1,450,000.00 in Liquid Reserve (Demo Data)
-  const spendableAipmLiabilities = 82500000; // ₱825,000.00 (Account 2010 - Demo Data)
-  const withdrawalReservations = 9500000; // ₱95,000.00 (Account 2020 - Demo Data)
-  const unearnedAdBudgets = 4200000; // ₱42,000.00 (Account 2030 - Demo Data)
-  const assistantCommissionsPayable = 2100000; // ₱21,000.00 (Account 2040 - Demo Data)
-  const pendingClearingHold = 3400000; // ₱34,000.00 (Account 2050 - Demo Data)
+  // Simulated Demo Metrics (Fictional demonstration data — no real monetary value)
+  const liquidVaultCashCentavos = 145000000; // ₱1,450,000.00 in Liquid Reserve (Demo Data Only)
+  const spendableAipmLiabilities = 82500000; // ₱825,000.00 (Account 2010 - Demo Data Only)
+  const withdrawalReservations = 9500000; // ₱95,000.00 (Account 2020 - Demo Data Only)
+  const unearnedAdBudgets = 4200000; // ₱42,000.00 (Account 2030 - Demo Data Only)
+  const assistantCommissionsPayable = 2100000; // ₱21,000.00 (Account 2040 - Demo Data Only)
+  const pendingClearingHold = 3400000; // ₱34,000.00 (Account 2050 - Demo Data Only)
 
   const totalUserLiabilities =
     spendableAipmLiabilities +
@@ -62,8 +61,8 @@ export const MainAdminView: React.FC = () => {
     mainAdminFinalDecision(id, decision);
     setFeedback(
       decision === 'APPROVE'
-        ? `✓ Simulated approval recorded in demo console. Target user ${item?.userDisplayName || 'User'} (${item?.userId || ''}) credited with ₱${item ? (item.amountCentavos / 100).toFixed(2) : '0.00'} demo AIPM.`
-        : `✓ Simulated rejection recorded. Zero liabilities credited.`
+        ? `✓ Simulated approval recorded in demo console. Target user ${item?.userDisplayName || 'User'} (${item?.userId || ''}) credited with ₱${item ? (item.amountCentavos / 100).toFixed(2) : '0.00'} demo AIPM (Simulated Demo Credit — No Real Value, No Financial Settlement).`
+        : `✓ Simulated rejection recorded. No balance credited.`
     );
     setTimeout(() => setFeedback(null), 5000);
   };
@@ -99,20 +98,20 @@ export const MainAdminView: React.FC = () => {
           </div>
           <div>
             <h1 className="text-2xl font-black tracking-tight text-white flex items-center gap-2">
-              Main Admin Treasury & Compliance Desk
+              Main Admin Demo Treasury & Review Desk
               <span className="text-xs px-2 py-0.5 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-400 font-mono">
                 DEMO-ONLY SIMULATION
               </span>
             </h1>
             <p className="text-sm text-slate-400">
-              DEMO-ONLY ROUTE — CLIENT-SIDE SIMULATION (NO REAL BACKEND ACCESS CONTROL). Simulated review sign-off and balance sheet invariant demonstration.
+              DEMO-ONLY ROUTE — CLIENT-SIDE SIMULATION (NO REAL BACKEND ACCESS CONTROL). Simulated review sign-off and balance sheet demonstration. No actual reserves, banking regulation compliance, or financial settlement.
             </p>
           </div>
         </div>
 
         <div className="flex items-center gap-2">
           <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-bold">
-            <Activity className="w-3.5 h-3.5 animate-pulse" /> SIMULATED CIRCUIT BREAKER: NORMAL
+            <Activity className="w-3.5 h-3.5 animate-pulse" /> SIMULATED DEMO STATUS: NORMAL
           </span>
         </div>
       </div>
@@ -124,7 +123,7 @@ export const MainAdminView: React.FC = () => {
         </div>
       )}
 
-      {/* Simulated Demo Metrics Card (v2.5.8 Formula 1 & 2 Invariants) */}
+      {/* Simulated Demo Metrics Card */}
       <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 space-y-6 shadow-2xl relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl pointer-events-none" />
 
@@ -132,16 +131,16 @@ export const MainAdminView: React.FC = () => {
           <div className="space-y-1">
             <div className="flex items-center gap-2 text-xs font-bold text-amber-400 uppercase tracking-wider font-mono">
               <Scale className="w-4 h-4" />
-              FICTIONAL DEMO DATA — NOT ACTUAL RESERVES OR REGULATORY APPROVAL
+              SAMPLE DATA — NOT ACTUAL RESERVES OR REGULATORY APPROVAL
             </div>
             <h2 className="text-xl font-bold text-white">
-              Simulated Demo Metrics: Model Balance Sheet & System Obligations
+              Simulated Demo Metrics: Illustrative Model & Demo Balances
             </h2>
           </div>
           <div className="text-right">
             <div className="text-xs text-slate-400 uppercase font-mono tracking-wider">Simulated Reserve Ratio (Demo Metric)</div>
             <div className={`text-2xl font-black font-mono ${isSolvent ? 'text-emerald-400' : 'text-rose-400'}`}>
-              {solvencyRatio.toFixed(1)}% <span className="text-xs font-medium text-slate-400">(Model Benchmark: 100.0%)</span>
+              {solvencyRatio.toFixed(1)}% <span className="text-xs font-medium text-slate-400">(Fictional Benchmark: 100.0% — Not Regulatory Solvency)</span>
             </div>
           </div>
         </div>
@@ -150,62 +149,62 @@ export const MainAdminView: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
           <div className="p-4 rounded-2xl bg-slate-950/70 border border-slate-800 space-y-1.5">
             <div className="text-slate-400 flex items-center justify-between">
-              <span>Account 1010 (Simulated Vault Cash)</span>
+              <span>Account 1010 (Simulated Vault Cash — Demo Only)</span>
               <Landmark className="w-3.5 h-3.5 text-cyan-400" />
             </div>
             <div className="text-lg font-bold text-cyan-400 font-mono">
               ₱{(liquidVaultCashCentavos / 100).toLocaleString('en-US', { minimumFractionDigits: 2 })}
             </div>
-            <p className="text-[10px] text-slate-500">Sample vault figure for mathematical model demonstration only.</p>
+            <p className="text-[10px] text-slate-500">Fictional demo vault figure for UI demonstration only (No actual cash or bank reserves).</p>
           </div>
 
           <div className="p-4 rounded-2xl bg-slate-950/70 border border-slate-800 space-y-1.5">
             <div className="text-slate-400 flex items-center justify-between">
-              <span>Total Obligations (L_total)</span>
+              <span>Total Demo Obligations (L_total — Demo Only)</span>
               <Layers className="w-3.5 h-3.5 text-purple-400" />
             </div>
             <div className="text-lg font-bold text-purple-400 font-mono">
               ₱{(totalUserLiabilities / 100).toLocaleString('en-US', { minimumFractionDigits: 2 })}
             </div>
-            <p className="text-[10px] text-slate-500">Sum of all spendable, reserved, and pending user balances.</p>
+            <p className="text-[10px] text-slate-500">Sum of all simulated spendable, reserved, and demo user balances.</p>
           </div>
 
           <div className="p-4 rounded-2xl bg-slate-950/70 border border-slate-800 space-y-1.5">
             <div className="text-slate-400 flex items-center justify-between">
-              <span>Excess Equity Reserve</span>
+              <span>Simulated Surplus Buffer (Demo Only)</span>
               <TrendingUp className="w-3.5 h-3.5 text-emerald-400" />
             </div>
             <div className="text-lg font-bold text-emerald-400 font-mono">
               ₱{((liquidVaultCashCentavos - totalUserLiabilities) / 100).toLocaleString('en-US', { minimumFractionDigits: 2 })}
             </div>
-            <p className="text-[10px] text-slate-500">Unencumbered platform surplus buffer protecting solvency.</p>
+            <p className="text-[10px] text-slate-500">Illustrative demo buffer figure for mathematical modeling only (No real funds or regulatory compliance).</p>
           </div>
         </div>
 
         {/* Detailed Account Balance Sheet Table */}
         <div className="bg-slate-950/50 rounded-2xl border border-slate-800/80 p-4 space-y-3">
           <div className="text-[11px] font-bold text-slate-300 font-mono uppercase tracking-wider">
-            Sub-Ledger Obligations Breakdown
+            Sub-Ledger Obligations Breakdown (Simulated Demo Data — No Real Value)
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 text-[11px] font-mono">
             <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800">
-              <span className="text-slate-500 block text-[9px]">Account 2010 (Spendable AIPM)</span>
+              <span className="text-slate-500 block text-[9px]">Account 2010 (Simulated Spendable AIPM)</span>
               <span className="text-slate-200 font-bold">₱{(spendableAipmLiabilities / 100).toLocaleString()}</span>
             </div>
             <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800">
-              <span className="text-slate-500 block text-[9px]">Account 2020 (Withdrawal Res.)</span>
+              <span className="text-slate-500 block text-[9px]">Account 2020 (Simulated Withdrawal Res.)</span>
               <span className="text-slate-200 font-bold">₱{(withdrawalReservations / 100).toLocaleString()}</span>
             </div>
             <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800">
-              <span className="text-slate-500 block text-[9px]">Account 2030 (Ad Budgets)</span>
+              <span className="text-slate-500 block text-[9px]">Account 2030 (Simulated Boost Preview)</span>
               <span className="text-slate-200 font-bold">₱{(unearnedAdBudgets / 100).toLocaleString()}</span>
             </div>
             <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800">
-              <span className="text-slate-500 block text-[9px]">Account 2040 (Assistant Comm.)</span>
+              <span className="text-slate-500 block text-[9px]">Account 2040 (Illustrative Assistant Comm.)</span>
               <span className="text-slate-200 font-bold">₱{(assistantCommissionsPayable / 100).toLocaleString()}</span>
             </div>
             <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800">
-              <span className="text-slate-500 block text-[9px]">Account 2050 (Clearing Hold)</span>
+              <span className="text-slate-500 block text-[9px]">Account 2050 (Simulated Anti-Fraud Hold)</span>
               <span className="text-slate-200 font-bold">₱{(pendingClearingHold / 100).toLocaleString()}</span>
             </div>
           </div>
@@ -221,7 +220,7 @@ export const MainAdminView: React.FC = () => {
               Simulated Authorization Queue ({pendingRecommendations.length})
             </h2>
             <p className="text-xs text-slate-400">
-              DEMO ONLY: Simulated review workflow. Sign-off is client-side only (no cryptographic keys, atomic settlements, or actual banking transactions).
+              DEMO ONLY: Simulated review workflow. Sign-off is client-side only (no cryptographic keys, atomic settlements, actual payment, or banking transactions).
             </p>
           </div>
         </div>
@@ -262,11 +261,14 @@ export const MainAdminView: React.FC = () => {
                   <div className="flex items-center justify-between text-[10px] text-slate-400">
                     <span>Screened by: {r.assignedAssistantName || 'Danilo Ramos'}</span>
                     <span className="text-purple-400 font-mono font-bold">
-                      Simulated Comm (Demo Only): ₱{(r.commissionCentavos / 100).toFixed(2)}
+                      Illustrative Comm. (Demo Only — No Real Cash): ₱{(r.commissionCentavos / 100).toFixed(2)}
                     </span>
                   </div>
                   <p className="text-slate-300 italic">
-                    "{r.adminNotes || 'Verification checks passed. Reference matched.'}"
+                    "{r.adminNotes || 'Verification checks passed in demo queue. Reference matched.'}"
+                  </p>
+                  <p className="text-[10px] text-amber-400/90 font-mono">
+                    *Illustrative commission shown for demonstration only. No actual credit, bank transfer, or financial settlement occurs.
                   </p>
                 </div>
 
@@ -289,13 +291,13 @@ export const MainAdminView: React.FC = () => {
                     onClick={() => handleDecision(r.id, 'REJECT')}
                     className="px-3 py-2.5 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/40 text-rose-300 font-bold rounded-xl text-xs transition flex items-center justify-center gap-1.5"
                   >
-                    <XCircle className="w-4 h-4" /> Final Reject
+                    <XCircle className="w-4 h-4" /> Simulate Reject
                   </button>
                   <button
                     onClick={() => handleDecision(r.id, 'APPROVE')}
                     className="px-3 py-2.5 bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-400 hover:to-indigo-500 text-white font-bold rounded-xl text-xs transition flex items-center justify-center gap-1.5 shadow-lg shadow-purple-500/20"
                   >
-                    <CheckCircle className="w-4 h-4" /> Sign in Demo Console
+                    <CheckCircle className="w-4 h-4" /> Simulate Approval (Demo)
                   </button>
                 </div>
               </div>
@@ -316,8 +318,8 @@ export const MainAdminView: React.FC = () => {
               <tr>
                 <th className="py-2.5 px-3">Transaction</th>
                 <th className="py-2.5 px-3">Sender</th>
-                <th className="py-2.5 px-3">Amount</th>
-                <th className="py-2.5 px-3">Simulated Comm. (Demo Only)</th>
+                <th className="py-2.5 px-3">Amount (Demo)</th>
+                <th className="py-2.5 px-3">Illustrative Comm. (Demo Only)</th>
                 <th className="py-2.5 px-3 text-right">Status</th>
               </tr>
             </thead>
@@ -352,3 +354,4 @@ export const MainAdminView: React.FC = () => {
     </div>
   );
 };
+

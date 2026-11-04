@@ -12,8 +12,6 @@ import {
   ShieldAlert,
   ShieldCheck,
   Check,
-  ArrowRight,
-  Sparkles,
   Smartphone,
   Lock,
   Mail,
@@ -37,7 +35,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
   const handleSelectRole = (role: UserRole) => {
     switchRole(role);
-    setNotice(`Switched persona to ${role}`);
+    setNotice(`Switched persona to ${role} (Demo Simulation)`);
     setTimeout(() => {
       onClose();
       if (role === 'ADMIN_ASSISTANT') navigateTo('adminassitant');
@@ -48,7 +46,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
   const handleMockSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setNotice('Phase 1B Sandbox: Demo authenticated successfully as Creator.');
+    setNotice('Phase 1B Sandbox: Simulated demo authentication completed (Client-Side Only — No Real Account).');
     setTimeout(() => {
       onClose();
     }, 600);
@@ -73,8 +71,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               <Zap className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-xl font-black text-white">DailyHabit Access Portal</h2>
-              <p className="text-xs text-slate-400">Phase 1B Persona & Authentication Sandbox</p>
+              <h2 className="text-xl font-black text-white">DailyHabit Demo Access Portal</h2>
+              <p className="text-xs text-slate-400">Simulated Client-Side Persona & Demo Access Sandbox</p>
             </div>
           </div>
           <button
@@ -95,7 +93,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 : 'text-slate-400 hover:text-white'
             }`}
           >
-            Switch Persona
+            Switch Persona (Demo)
           </button>
           <button
             onClick={() => setTab('login')}
@@ -105,7 +103,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 : 'text-slate-400 hover:text-white'
             }`}
           >
-            Sign In
+            Sign In (Demo)
           </button>
           <button
             onClick={() => setTab('register')}
@@ -115,7 +113,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 : 'text-slate-400 hover:text-white'
             }`}
           >
-            Register
+            Register (Demo)
           </button>
         </div>
 
@@ -128,12 +126,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         {/* Tab 1: Switch Persona (Fast 1-Click for Audit & Testing) */}
         {tab === 'switch' && (
           <div className="space-y-4">
-            <div className="p-3 bg-amber-950/40 border border-amber-500/30 rounded-xl text-[11px] text-amber-200 leading-relaxed">
-              <span className="font-bold text-amber-300 block mb-0.5">DEMO-ONLY SIMULATION:</span>
-              Persona switching is an in-memory client-side testing interface. It does not provide real cryptographic role-based access control (RBAC), authentication tokens, or server-enforced security boundaries.
+            <div className="p-3 bg-amber-950/40 border border-amber-500/30 rounded-xl text-[11px] text-amber-200 leading-relaxed space-y-1">
+              <span className="font-bold text-amber-300 block">DEMO-ONLY SIMULATION — CLIENT-SIDE FUNCTIONALITY:</span>
+              <p>
+                Persona switching is a simulated in-memory client-side testing interface. Demo accounts do not represent real identity verification, production authentication, or cryptographic role-based access control (RBAC).
+              </p>
             </div>
             <p className="text-xs text-slate-400">
-              Select an architectural persona below to preview role-specific interface states:
+              Select an illustrative demo persona below to preview role-specific interface states:
             </p>
 
             <div className="space-y-3">
@@ -154,7 +154,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                     <div className="text-sm font-bold text-white flex items-center gap-2">
                       Kaelen Reyes
                       <span className="text-[10px] px-1.5 py-0.2 rounded bg-cyan-500/10 text-cyan-400 font-mono">
-                        CREATOR
+                        DEMO CREATOR
                       </span>
                     </div>
                     <p className="text-xs text-slate-400">
@@ -184,7 +184,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                     <div className="text-sm font-bold text-white flex items-center gap-2">
                       Danilo Ramos
                       <span className="text-[10px] px-1.5 py-0.2 rounded bg-amber-500/10 text-amber-400 font-mono">
-                        ADMIN ASSISTANT
+                        DEMO ASSISTANT
                       </span>
                     </div>
                     <p className="text-xs text-slate-400">
@@ -214,7 +214,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                     <div className="text-sm font-bold text-white flex items-center gap-2">
                       Master Administrator
                       <span className="text-[10px] px-1.5 py-0.2 rounded bg-purple-500/10 text-purple-400 font-mono">
-                        MAIN ADMIN
+                        DEMO MAIN ADMIN
                       </span>
                     </div>
                     <p className="text-xs text-slate-400">
@@ -233,13 +233,15 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         {/* Tab 2: Login */}
         {tab === 'login' && (
           <form onSubmit={handleMockSubmit} className="space-y-4">
-            <div className="p-3 bg-amber-950/40 border border-amber-500/30 rounded-xl text-[11px] text-amber-200 leading-relaxed">
-              <span className="font-bold text-amber-300 block mb-0.5">DEMO-ONLY SIMULATION:</span>
-              Client-side authentication mockup for demonstration only. Does not provide real user authentication, session security, or backend validation.
+            <div className="p-3 bg-amber-950/40 border border-amber-500/30 rounded-xl text-[11px] text-amber-200 leading-relaxed space-y-1">
+              <span className="font-bold text-amber-300 block">DEMO-ONLY SIMULATION — NO SECURE STORAGE:</span>
+              <p>
+                Client-side authentication simulation for demonstration only. Passwords, accounts, and sessions are not securely stored, encrypted on a server, or protected by a production backend. Demo accounts do not represent real identity verification. Do not enter real credentials.
+              </p>
             </div>
             <div className="space-y-1.5">
               <label className="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
-                <Mail className="w-3.5 h-3.5 text-cyan-400" /> Email or GCash Number
+                <Mail className="w-3.5 h-3.5 text-cyan-400" /> Email or GCash Number (Demo Input)
               </label>
               <input
                 type="text"
@@ -252,7 +254,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
             <div className="space-y-1.5">
               <label className="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
-                <Lock className="w-3.5 h-3.5 text-cyan-400" /> Password
+                <Lock className="w-3.5 h-3.5 text-cyan-400" /> Password (Demo Only)
               </label>
               <input
                 type="password"
@@ -267,7 +269,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               type="submit"
               className="w-full py-3 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold rounded-xl text-xs transition shadow-lg shadow-cyan-500/20"
             >
-              Sign In (Demo Auth)
+              Sign In (Simulated Demo Auth)
             </button>
           </form>
         )}
@@ -275,13 +277,15 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         {/* Tab 3: Register */}
         {tab === 'register' && (
           <form onSubmit={handleMockSubmit} className="space-y-4">
-            <div className="p-3 bg-amber-950/40 border border-amber-500/30 rounded-xl text-[11px] text-amber-200 leading-relaxed">
-              <span className="font-bold text-amber-300 block mb-0.5">DEMO-ONLY SIMULATION:</span>
-              Registration is a client-side prototype demonstration. No real accounts, database records, or credentials are created.
+            <div className="p-3 bg-amber-950/40 border border-amber-500/30 rounded-xl text-[11px] text-amber-200 leading-relaxed space-y-1">
+              <span className="font-bold text-amber-300 block">DEMO-ONLY SIMULATION — NO BACKEND STORAGE:</span>
+              <p>
+                Registration is a client-side prototype demonstration only. No real accounts, database records, credentials, or secure sessions are created, stored, or protected by a production backend. Demo accounts do not represent real identity verification.
+              </p>
             </div>
             <div className="space-y-1.5">
               <label className="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
-                <User className="w-3.5 h-3.5 text-cyan-400" /> Creator Handle
+                <User className="w-3.5 h-3.5 text-cyan-400" /> Creator Handle (Demo Input)
               </label>
               <input
                 type="text"
@@ -292,7 +296,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
             <div className="space-y-1.5">
               <label className="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
-                <Smartphone className="w-3.5 h-3.5 text-cyan-400" /> Philippine GCash Mobile Number
+                <Smartphone className="w-3.5 h-3.5 text-cyan-400" /> Philippine GCash Mobile Number (Demo Input)
               </label>
               <input
                 type="text"
@@ -305,7 +309,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
             <div className="space-y-1.5">
               <label className="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
-                <Lock className="w-3.5 h-3.5 text-cyan-400" /> Create Security Pin / Password
+                <Lock className="w-3.5 h-3.5 text-cyan-400" /> Create Security Pin / Password (Demo Input)
               </label>
               <input
                 type="password"
@@ -318,13 +322,16 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               type="submit"
               className="w-full py-3 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold rounded-xl text-xs transition shadow-lg shadow-cyan-500/20"
             >
-              Create Account (Demo Auth)
+              Create Account (Simulated Demo Auth)
             </button>
           </form>
         )}
 
-        <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 text-[10px] text-slate-500 font-mono">
-          Note: In accordance with Phase 1B specifications, credentials and authentication sessions are simulated in-memory. Zero backend writes or Firebase credentials are deployed.
+        <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 text-[10px] text-slate-400 font-mono space-y-1">
+          <p className="font-semibold text-slate-300">DEMO ONLY — SIMULATED CLIENT-SIDE FUNCTIONALITY:</p>
+          <p>
+            In accordance with Phase 1B specifications, credentials and authentication sessions are simulated in-memory on the client. Zero backend writes, database records, or Firebase credentials are deployed. Demo accounts do not represent real identity verification.
+          </p>
         </div>
       </div>
     </div>

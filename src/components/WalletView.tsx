@@ -11,16 +11,10 @@ import {
   ArrowUpRight,
   ArrowDownLeft,
   Clock,
-  CheckCircle2,
   AlertTriangle,
-  ShieldCheck,
   CreditCard,
   History,
-  Info,
   Sparkles,
-  QrCode,
-  DollarSign,
-  Send,
 } from 'lucide-react';
 
 export const WalletView: React.FC = () => {
@@ -187,7 +181,7 @@ export const WalletView: React.FC = () => {
               className="py-2.5 px-3 bg-slate-900 hover:bg-slate-800 border border-slate-700 rounded-xl text-xs font-medium text-slate-200 transition-colors flex items-center justify-center gap-1.5"
             >
               <ArrowDownLeft className="w-3.5 h-3.5 text-emerald-400" />
-              <span>GCash Top-Up</span>
+              <span>Simulated GCash Top-Up Preview</span>
             </button>
             <button
               onClick={() => setIsWithdrawModalOpen(true)}
@@ -220,7 +214,7 @@ export const WalletView: React.FC = () => {
         <div className="flex items-center justify-between pb-3 border-b border-slate-800">
           <div className="flex items-center gap-2">
             <History className="w-5 h-5 text-cyan-400" />
-            <h3 className="font-display font-bold text-white text-base">Ledger Transaction Audit Trail</h3>
+            <h3 className="font-display font-bold text-white text-base">Simulated Transaction History</h3>
           </div>
           <span className="text-xs text-slate-500 font-mono">
             {walletTransactions.length} Simulated Transaction History
@@ -294,7 +288,7 @@ export const WalletView: React.FC = () => {
             <div className="flex items-center justify-between pb-2 border-b border-slate-800">
               <div className="flex items-center gap-2">
                 <CreditCard className="w-5 h-5 text-cyan-400" />
-                <h3 className="font-display font-bold text-white text-base">GCash Manual Top-Up</h3>
+                <h3 className="font-display font-bold text-white text-base">Simulated GCash Top-Up Preview</h3>
               </div>
               <button onClick={() => setIsTopUpModalOpen(false)} className="text-slate-400 hover:text-white text-lg">
                 &times;
@@ -302,7 +296,7 @@ export const WalletView: React.FC = () => {
             </div>
 
             <p className="text-xs text-slate-300 leading-relaxed">
-              Submit your simulated GCash deposit. The proof is routed to the <strong className="text-cyan-300">Admin Assistant Queue</strong> for review, followed by <strong className="text-purple-300">Main Admin final bank verification</strong>.
+              Submit your simulated GCash deposit. The proof is routed to the <strong className="text-cyan-300">Admin Assistant Queue</strong> for review, followed by <strong className="text-purple-300">Simulated Main Admin Review</strong>. No actual payment, bank transfer, or balance deposit occurs.
             </p>
 
             <div className="p-3 bg-cyan-950/40 border border-cyan-500/30 rounded-xl text-[11px] text-cyan-200 space-y-1">
@@ -347,7 +341,7 @@ export const WalletView: React.FC = () => {
               <div className="p-3 rounded-xl bg-slate-900/90 border border-slate-800 text-[11px] font-mono text-slate-400 space-y-1">
                 <div className="flex justify-between">
                   <span>Merchant Destination:</span>
-                  <span className="text-white">DAILYHABIT CORP (Demo Terminal)</span>
+                  <span className="text-white">Fictional Demo Destination</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Illustrative Assistant Comm.:</span>
@@ -356,7 +350,7 @@ export const WalletView: React.FC = () => {
                   </span>
                 </div>
                 <p className="text-[10px] text-amber-400/90 pt-1">
-                  *Illustrative commission shown as pending until simulated Main Admin sign-off.
+                  *Illustrative commission shown as pending until simulated Main Admin sign-off. No actual financial settlement or payout occurs.
                 </p>
               </div>
 
@@ -384,7 +378,7 @@ export const WalletView: React.FC = () => {
                   type="submit"
                   className="flex-1 py-2 bg-gradient-to-r from-cyan-600 to-purple-600 hover:from-cyan-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-cyan-500/20"
                 >
-                  Submit Top-Up (₱{topUpAmount})
+                  Simulate Top-Up Submission (₱{topUpAmount})
                 </button>
               </div>
             </form>
@@ -407,7 +401,7 @@ export const WalletView: React.FC = () => {
             </div>
 
             <p className="text-xs text-slate-300 leading-relaxed">
-              DEMO ONLY: Simulated payout reservation. Scheduled batch disbursement runs on the <strong className="text-emerald-300">5th and 20th of the month</strong>. No real-world cash or fees are transferred.
+              DEMO ONLY: Simulated payout reservation. Scheduled batch disbursement runs on the <strong className="text-emerald-300">5th and 20th of the month</strong>. No actual payment, bank transfer, fee collection, or cash-out occurs.
             </p>
 
             <form onSubmit={handleWithdrawSubmit} className="space-y-4">
@@ -444,7 +438,7 @@ export const WalletView: React.FC = () => {
                   <span className="text-amber-400">-₱15.00</span>
                 </div>
                 <div className="flex justify-between text-slate-400 font-bold pt-1 border-t border-slate-800">
-                  <span className="text-emerald-300">Simulated Net Cash-Out:</span>
+                  <span className="text-emerald-300">Simulated Net Amount (Display Only):</span>
                   <span className="text-emerald-400 text-sm">
                     ₱{Math.max(0, withdrawAmount - 15).toFixed(2)}
                   </span>
@@ -475,7 +469,7 @@ export const WalletView: React.FC = () => {
                   type="submit"
                   className="flex-1 py-2 bg-gradient-to-r from-emerald-600 to-cyan-600 hover:from-emerald-500 text-slate-950 font-bold text-xs rounded-xl shadow-lg shadow-emerald-500/20"
                 >
-                  Reserve Payout (₱{withdrawAmount})
+                  Simulate Payout Reservation (₱{withdrawAmount})
                 </button>
               </div>
             </form>
@@ -485,3 +479,4 @@ export const WalletView: React.FC = () => {
     </div>
   );
 };
+

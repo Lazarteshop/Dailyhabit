@@ -11,14 +11,11 @@ import {
   Share2,
   Coins,
   Play,
-  Pause,
   Volume2,
   VolumeX,
   Sparkles,
   ChevronUp,
   ChevronDown,
-  Clock,
-  ShieldAlert,
   Flame,
 } from 'lucide-react';
 
@@ -41,7 +38,7 @@ export const ReelsView: React.FC = () => {
   const [rewardNotice, setRewardNotice] = useState<string | null>(null);
 
   const activeReel = reels[activeReelIndex] || reels[0];
-  const isClaimedToday = isReelClaimedToday(activeReel.id) || rewardClaimedForActive;
+  const isClaimedToday = Boolean(isReelClaimedToday(activeReel.id) || rewardClaimedForActive);
 
   // 30-second playback timer simulation
   useEffect(() => {
@@ -60,7 +57,7 @@ export const ReelsView: React.FC = () => {
     return () => clearInterval(interval);
   }, [isPlaying, playbackSeconds, isClaimedToday]);
 
-  // Reset timer on reel switch
+  // Reset timer on reel switch without bypassing context-level duplicate claim protection
   useEffect(() => {
     setPlaybackSeconds(0);
     setRewardClaimedForActive(false);
@@ -84,8 +81,23 @@ export const ReelsView: React.FC = () => {
   };
 
   const handleClaimReward = () => {
+    // Strict guard: ensure viewing countdown is fully completed before awarding
+    if (playbackSeconds < 30) {
+      setRewardNotice('DEMO ONLY: Please complete the 30-second demonstration viewing requirement before claiming.');
+      return;
+    }
+
+    // Context duplicate prevention check
+    if (isReelClaimedToday(activeReel.id)) {
+      setRewardClaimedForActive(true);
+      setRewardNotice('DEMO ONLY — NO REAL VALUE: Reward already claimed for this reel today.');
+      return;
+    }
+
     const res = claimReelReward(activeReel.id);
-    setRewardClaimedForActive(true);
+    if (res.success) {
+      setRewardClaimedForActive(true);
+    }
     setRewardNotice(res.message);
   };
 
@@ -151,7 +163,7 @@ export const ReelsView: React.FC = () => {
                 Simulated Countdown: {playbackSeconds}s / 30s
               </span>
               <span className="text-amber-400 font-bold text-[10px]">
-                {isClaimedToday ? 'Claimed Today' : playbackSeconds >= 30 ? 'Demo Reward Ready' : 'Demo Player'}
+                {isClaimedToday ? 'Claimed Today (Demo Only)' : playbackSeconds >= 30 ? 'Demo Reward Ready' : 'Demo Player'}
               </span>
             </div>
 
@@ -256,14 +268,14 @@ export const ReelsView: React.FC = () => {
               className="w-full mt-2 py-2.5 bg-gradient-to-r from-cyan-400 to-purple-500 hover:from-cyan-300 hover:to-purple-400 text-slate-950 font-display font-bold text-xs rounded-xl shadow-xl shadow-cyan-500/40 flex items-center justify-center gap-2 animate-bounce"
             >
               <Coins className="w-4 h-4 fill-current" />
-              <span>CLAIM +5 DEMO AI COINS (SIMULATED REWARD — NO REAL VALUE)</span>
+              <span>CLAIM +5 DEMO AI COINS (DEMO ONLY — NO REAL VALUE)</span>
             </button>
           )}
 
           {isClaimedToday && (
             <div className="mt-2 p-2 rounded-xl bg-emerald-950/80 border border-emerald-500/50 text-[11px] font-mono text-emerald-300 flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-emerald-400 shrink-0" />
-              <span>DEMO ONLY: Simulated reward (+5 AIC) claimed for this reel today. Strictly non-cash, for demo AI SHOP upgrades.</span>
+              <span>DEMO ONLY — NO REAL VALUE: Simulated reward (+5 AIC) claimed for this reel today. Strictly non-cash, carries no real-world value, and is for demo AI SHOP upgrades only.</span>
             </div>
           )}
 

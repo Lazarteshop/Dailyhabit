@@ -390,7 +390,7 @@ const INITIAL_CHAT_MESSAGES: ChatMessage[] = [
       { label: 'Check AI Coins & Upgrade Shop', action: 'upgrade_shop' },
       { label: 'Review Demo AIPM Balance (DEMO ONLY)', action: 'view_wallet' },
       { label: 'Boost Reel with Ad Campaign', action: 'promote_post' },
-      { label: 'View Philippine Settlement Rules', action: 'settlement_rules' },
+      { label: 'View Demo Settlement Schedule', action: 'settlement_rules' },
     ],
   },
 ];
@@ -463,6 +463,21 @@ export const DailyHabitProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
+  // Asia/Manila calendar day reset watcher
+  useEffect(() => {
+    const checkManilaDay = () => {
+      const currentManilaDay = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Manila' }).format(new Date());
+      if (currentManilaDay !== simulatedDayManila) {
+        setSimulatedDayManila(currentManilaDay);
+        setClaimedReelIdsToday([]);
+        setDailyViewCount(0);
+      }
+    };
+    checkManilaDay();
+    const interval = setInterval(checkManilaDay, 60000);
+    return () => clearInterval(interval);
+  }, [simulatedDayManila]);
+
   const navigateTo = (route: string) => {
     setCurrentRoute(route);
     window.history.pushState(null, '', `/${route === 'home' ? '' : route}`);
@@ -470,6 +485,17 @@ export const DailyHabitProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   };
 
   const switchRole = (role: UserRole) => {
+    // If switching away from user, persist Kaelen's current balance to registry
+    if (currentRole === 'USER' || currentUser.id === 'usr_kaelen_01') {
+      setDemoUserAccounts((prev) => ({
+        ...prev,
+        usr_kaelen_01: {
+          ...(prev['usr_kaelen_01'] || { displayName: 'Kaelen Reyes', handle: 'kaelen_cyber' }),
+          aiPocketMoneyCentavos: currentUser.wallets.aiPocketMoneyCentavos,
+        },
+      }));
+    }
+
     setCurrentRole(role);
     setCurrentUser((prev) => {
       const targetId =
@@ -494,7 +520,7 @@ export const DailyHabitProvider: React.FC<{ children: React.ReactNode }> = ({ ch
       const targetCentavos =
         role === 'USER'
           ? (demoUserAccounts['usr_kaelen_01']?.aiPocketMoneyCentavos ?? prev.wallets.aiPocketMoneyCentavos)
-          : prev.wallets.aiPocketMoneyCentavos;
+          : 0;
 
       return {
         ...prev,
@@ -505,6 +531,8 @@ export const DailyHabitProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         wallets: {
           ...prev.wallets,
           aiPocketMoneyCentavos: targetCentavos,
+          pendingWithdrawalCentavos: role === 'USER' ? prev.wallets.pendingWithdrawalCentavos : 0,
+          pendingClearingCentavos: role === 'USER' ? prev.wallets.pendingClearingCentavos : 0,
         },
       };
     });
@@ -743,6 +771,14 @@ export const DailyHabitProvider: React.FC<{ children: React.ReactNode }> = ({ ch
       },
     }));
 
+    setDemoUserAccounts((prev) => ({
+      ...prev,
+      usr_kaelen_01: {
+        ...(prev['usr_kaelen_01'] || { displayName: 'Kaelen Reyes', handle: 'kaelen_cyber' }),
+        aiPocketMoneyCentavos: Math.max(0, (prev['usr_kaelen_01']?.aiPocketMoneyCentavos ?? currentUser.wallets.aiPocketMoneyCentavos) - product.priceAipmCentavos),
+      },
+    }));
+
     const newTx: WalletTransaction = {
       id: `tx_${Date.now()}`,
       type: 'SHOP_UPGRADE',
@@ -778,7 +814,7 @@ export const DailyHabitProvider: React.FC<{ children: React.ReactNode }> = ({ ch
 
     const newReviewItem: PaymentReceiptReview = {
       id: `rcpt_${Date.now()}`,
-      userId: currentUser.id,
+      userId: currentUser.id === 'usr_kaelen_01' || currentUser.role === 'USER' ? 'usr_kaelen_01' : currentUser.id,
       userDisplayName: currentUser.displayName,
       gcashNumberMasked: '+639*****' + Math.floor(1000 + Math.random() * 9000),
       gcashReference: gcashRef,
@@ -821,6 +857,14 @@ export const DailyHabitProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         ...prev.wallets,
         aiPocketMoneyCentavos: prev.wallets.aiPocketMoneyCentavos - grossCentavos,
         pendingWithdrawalCentavos: prev.wallets.pendingWithdrawalCentavos + grossCentavos,
+      },
+    }));
+
+    setDemoUserAccounts((prev) => ({
+      ...prev,
+      usr_kaelen_01: {
+        ...(prev['usr_kaelen_01'] || { displayName: 'Kaelen Reyes', handle: 'kaelen_cyber' }),
+        aiPocketMoneyCentavos: Math.max(0, (prev['usr_kaelen_01']?.aiPocketMoneyCentavos ?? currentUser.wallets.aiPocketMoneyCentavos) - grossCentavos),
       },
     }));
 

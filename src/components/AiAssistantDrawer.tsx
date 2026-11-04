@@ -11,8 +11,6 @@ import {
   Send,
   Sparkles,
   ArrowRight,
-  ShieldAlert,
-  Coins,
   Store,
   Wallet,
   Zap,
@@ -41,10 +39,10 @@ export const AiAssistantDrawer: React.FC = () => {
       <button
         onClick={() => setIsAssistantOpen(true)}
         className="fixed bottom-20 md:bottom-6 right-6 z-40 p-4 rounded-2xl bg-gradient-to-tr from-cyan-500 to-blue-600 text-slate-950 font-bold shadow-xl shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:scale-105 transition-all duration-300 flex items-center gap-2 group"
-        aria-label="Open AI Assistant"
+        aria-label="Open Demo Assistant"
       >
         <Bot className="w-5 h-5 text-slate-950 group-hover:rotate-12 transition-transform" />
-        <span className="hidden sm:inline text-xs font-black tracking-wide">AI COPILOT</span>
+        <span className="hidden sm:inline text-xs font-black tracking-wide">DEMO COPILOT</span>
         <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
       </button>
     );
@@ -92,14 +90,14 @@ export const AiAssistantDrawer: React.FC = () => {
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="font-bold text-sm text-white">DailyHabit Copilot</h3>
+                <h3 className="font-bold text-sm text-white">DailyHabit Demo Assistant</h3>
                 <span className="px-1.5 py-0.2 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 text-[9px] font-mono font-bold">
                   SIMULATED DEMO (KEYWORD ENGINE)
                 </span>
               </div>
               <p className="text-[11px] text-slate-400 flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block" />
-                Keyword-based mock responses — no live Gemini API integration
+                Phase 1B simulated keyword-based responses only (No live AI or backend service)
               </p>
             </div>
           </div>
@@ -110,6 +108,12 @@ export const AiAssistantDrawer: React.FC = () => {
           >
             <X className="w-5 h-5" />
           </button>
+        </div>
+
+        {/* Notice Banner */}
+        <div className="p-2.5 mx-4 mt-3 bg-slate-900/90 border border-slate-800 rounded-xl text-[10px] font-mono text-slate-400 flex items-start gap-2">
+          <Bot className="w-3.5 h-3.5 text-cyan-400 shrink-0 mt-0.5" />
+          <span>DEMO ONLY: Keyword-based response simulation. All balances, shop tiers, and assistance provided are simulated demonstration data with no real financial or account impact.</span>
         </div>
 
         {/* Quick Navigation Short-cuts */}
@@ -162,7 +166,7 @@ export const AiAssistantDrawer: React.FC = () => {
               >
                 {msg.sender === 'assistant' && (
                   <span className="text-[9px] font-mono text-cyan-400 font-semibold block mb-1">
-                    Simulated AI Response (Keyword Match — No Live Gemini API)
+                    Simulated Demo Response (Keyword-Based Mock — No Backend AI Service)
                   </span>
                 )}
                 <div className="whitespace-pre-line">{msg.text}</div>
@@ -197,7 +201,7 @@ export const AiAssistantDrawer: React.FC = () => {
         {/* Quick Suggestion Chips */}
         <div className="px-4 py-2 border-t border-slate-800/60 bg-slate-900/40 space-y-1.5">
           <div className="text-[10px] font-mono text-slate-500 flex items-center gap-1">
-            <Sparkles className="w-3 h-3 text-cyan-400" /> Suggested Inquiries
+            <Sparkles className="w-3 h-3 text-cyan-400" /> Suggested Inquiries (Demo Topics)
           </div>
           <div className="flex flex-wrap gap-1.5">
             {quickPrompts.map((q, idx) => (
@@ -225,7 +229,7 @@ export const AiAssistantDrawer: React.FC = () => {
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask about shop tiers, GCash, or ad spend..."
+              placeholder="Ask about simulated tiers, demo balances, or preview features..."
               className="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition"
             />
             <button
