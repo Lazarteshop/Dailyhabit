@@ -29,6 +29,7 @@ export const ReelsView: React.FC = () => {
     setActiveReelIndex,
     toggleLikeReel,
     claimReelReward,
+    isReelClaimedToday,
     dailyViewCount,
     navigateTo,
   } = useDailyHabit();
@@ -40,11 +41,12 @@ export const ReelsView: React.FC = () => {
   const [rewardNotice, setRewardNotice] = useState<string | null>(null);
 
   const activeReel = reels[activeReelIndex] || reels[0];
+  const isClaimedToday = isReelClaimedToday(activeReel.id) || rewardClaimedForActive;
 
   // 30-second playback timer simulation
   useEffect(() => {
     let interval: any;
-    if (isPlaying && playbackSeconds < 30 && !rewardClaimedForActive) {
+    if (isPlaying && playbackSeconds < 30 && !isClaimedToday) {
       interval = setInterval(() => {
         setPlaybackSeconds((prev) => {
           if (prev >= 29) {
@@ -56,7 +58,7 @@ export const ReelsView: React.FC = () => {
       }, 1000);
     }
     return () => clearInterval(interval);
-  }, [isPlaying, playbackSeconds, rewardClaimedForActive]);
+  }, [isPlaying, playbackSeconds, isClaimedToday]);
 
   // Reset timer on reel switch
   useEffect(() => {
@@ -122,7 +124,7 @@ export const ReelsView: React.FC = () => {
       {/* Main Reel Card Container (Vertical 9:16 layout) */}
       <div className="relative mx-auto w-full max-w-md h-[580px] sm:h-[640px] rounded-3xl overflow-hidden border border-slate-700/80 shadow-2xl bg-slate-950">
         
-        {/* Background Video / Animated Image */}
+        {/* Background Static Image Preview */}
         <img
           src={activeReel.videoCoverUrl}
           alt={activeReel.title}
@@ -133,16 +135,23 @@ export const ReelsView: React.FC = () => {
         {/* Ambient Overlay Gradient Scrim */}
         <div className="absolute inset-0 bg-gradient-to-b from-slate-950/40 via-transparent to-slate-950/90" />
 
+        {/* Static Image Preview Badge */}
+        <div className="absolute top-18 left-4 z-20 pointer-events-none">
+          <span className="px-2.5 py-1 rounded-lg bg-slate-950/85 backdrop-blur-md border border-slate-700/80 text-[10px] font-mono text-slate-300 shadow">
+            Static Image Preview — Demonstration Only (No Live Video Stream)
+          </span>
+        </div>
+
         {/* Top Floating Reward Progress Bar (30 seconds target) */}
         <div className="absolute top-4 left-4 right-4 z-20">
           <div className="bg-slate-950/80 backdrop-blur-md rounded-xl p-2.5 border border-cyan-500/30 shadow-lg">
             <div className="flex items-center justify-between text-[11px] font-mono mb-1.5">
               <span className="text-cyan-300 flex items-center gap-1 font-semibold">
                 <Coins className="w-3.5 h-3.5 text-cyan-400" />
-                Simulated Playback: {playbackSeconds}s / 30s
+                Simulated Countdown: {playbackSeconds}s / 30s
               </span>
               <span className="text-amber-400 font-bold text-[10px]">
-                {playbackSeconds >= 30 ? 'Demo Reward Ready' : 'Demo Player'}
+                {isClaimedToday ? 'Claimed Today' : playbackSeconds >= 30 ? 'Demo Reward Ready' : 'Demo Player'}
               </span>
             </div>
 
@@ -241,24 +250,24 @@ export const ReelsView: React.FC = () => {
           </p>
 
           {/* 30-Second Reward Claim Action */}
-          {playbackSeconds >= 30 && !rewardClaimedForActive && (
+          {playbackSeconds >= 30 && !isClaimedToday && (
             <button
               onClick={handleClaimReward}
               className="w-full mt-2 py-2.5 bg-gradient-to-r from-cyan-400 to-purple-500 hover:from-cyan-300 hover:to-purple-400 text-slate-950 font-display font-bold text-xs rounded-xl shadow-xl shadow-cyan-500/40 flex items-center justify-center gap-2 animate-bounce"
             >
               <Coins className="w-4 h-4 fill-current" />
-              <span>CLAIM +5 DEMO AI COINS (NO REAL VALUE)</span>
+              <span>CLAIM +5 DEMO AI COINS (SIMULATED REWARD — NO REAL VALUE)</span>
             </button>
           )}
 
-          {rewardClaimedForActive && (
+          {isClaimedToday && (
             <div className="mt-2 p-2 rounded-xl bg-emerald-950/80 border border-emerald-500/50 text-[11px] font-mono text-emerald-300 flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-emerald-400 shrink-0" />
-              <span>DEMO ONLY: +5 AI Coins added. Non-cash, strictly for demo AI SHOP upgrades.</span>
+              <span>DEMO ONLY: Simulated reward (+5 AIC) claimed for this reel today. Strictly non-cash, for demo AI SHOP upgrades.</span>
             </div>
           )}
 
-          {rewardNotice && !rewardClaimedForActive && (
+          {rewardNotice && !isClaimedToday && (
             <div className="mt-2 p-2 rounded-xl bg-amber-950/80 border border-amber-500/50 text-[10px] font-mono text-amber-300">
               {rewardNotice}
             </div>

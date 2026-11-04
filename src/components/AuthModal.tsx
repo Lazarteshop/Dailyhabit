@@ -218,7 +218,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                       </span>
                     </div>
                     <p className="text-xs text-slate-400">
-                      Level-2 fiduciary signatory. Solvency audits & final transaction authorization.
+                      Level-2 simulated reviewer. Simulated demo metrics & final demo review authorization.
                     </p>
                   </div>
                 </div>
@@ -233,6 +233,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         {/* Tab 2: Login */}
         {tab === 'login' && (
           <form onSubmit={handleMockSubmit} className="space-y-4">
+            <div className="p-3 bg-amber-950/40 border border-amber-500/30 rounded-xl text-[11px] text-amber-200 leading-relaxed">
+              <span className="font-bold text-amber-300 block mb-0.5">DEMO-ONLY SIMULATION:</span>
+              Client-side authentication mockup for demonstration only. Does not provide real user authentication, session security, or backend validation.
+            </div>
             <div className="space-y-1.5">
               <label className="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
                 <Mail className="w-3.5 h-3.5 text-cyan-400" /> Email or GCash Number
@@ -271,6 +275,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         {/* Tab 3: Register */}
         {tab === 'register' && (
           <form onSubmit={handleMockSubmit} className="space-y-4">
+            <div className="p-3 bg-amber-950/40 border border-amber-500/30 rounded-xl text-[11px] text-amber-200 leading-relaxed">
+              <span className="font-bold text-amber-300 block mb-0.5">DEMO-ONLY SIMULATION:</span>
+              Registration is a client-side prototype demonstration. No real accounts, database records, or credentials are created.
+            </div>
             <div className="space-y-1.5">
               <label className="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
                 <User className="w-3.5 h-3.5 text-cyan-400" /> Creator Handle

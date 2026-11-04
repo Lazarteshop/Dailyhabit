@@ -93,13 +93,13 @@ export const AiAssistantDrawer: React.FC = () => {
             <div>
               <div className="flex items-center gap-2">
                 <h3 className="font-bold text-sm text-white">DailyHabit Copilot</h3>
-                <span className="px-1.5 py-0.2 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 text-[9px] font-mono">
-                  v2.5.8 CORE
+                <span className="px-1.5 py-0.2 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 text-[9px] font-mono font-bold">
+                  SIMULATED DEMO (KEYWORD ENGINE)
                 </span>
               </div>
               <p className="text-[11px] text-slate-400 flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block" />
-                Context-aware creator & commerce advisor
+                Keyword-based mock responses — no live Gemini API integration
               </p>
             </div>
           </div>
@@ -160,6 +160,11 @@ export const AiAssistantDrawer: React.FC = () => {
                     : 'bg-slate-900/90 border border-slate-800 text-slate-200'
                 }`}
               >
+                {msg.sender === 'assistant' && (
+                  <span className="text-[9px] font-mono text-cyan-400 font-semibold block mb-1">
+                    Simulated AI Response (Keyword Match — No Live Gemini API)
+                  </span>
+                )}
                 <div className="whitespace-pre-line">{msg.text}</div>
                 <div
                   className={`text-[9px] mt-1.5 font-mono ${

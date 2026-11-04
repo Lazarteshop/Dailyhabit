@@ -46,6 +46,7 @@ interface DailyHabitContextType {
   setActiveReelIndex: (index: number) => void;
   toggleLikeReel: (reelId: string) => void;
   claimReelReward: (reelId: string) => { success: boolean; message: string; coinsEarned: number };
+  isReelClaimedToday: (reelId: string) => boolean;
   dailyViewCount: number;
 
   // AI SHOP
@@ -55,6 +56,7 @@ interface DailyHabitContextType {
 
   // Dual Wallet & Financials
   walletTransactions: WalletTransaction[];
+  demoUserAccounts: Record<string, { displayName: string; handle: string; aiPocketMoneyCentavos: number }>;
   requestSimulatedTopUp: (amountPhp: number, gcashRef: string) => { success: boolean; message: string };
   requestSimulatedWithdrawal: (amountPhp: number, gcashNumber: string) => { success: boolean; message: string };
   promotePostWithAipm: (postId: string, budgetPhp: number) => { success: boolean; message: string };
@@ -393,6 +395,13 @@ const INITIAL_CHAT_MESSAGES: ChatMessage[] = [
   },
 ];
 
+const INITIAL_DEMO_ACCOUNTS: Record<string, { displayName: string; handle: string; aiPocketMoneyCentavos: number }> = {
+  usr_kaelen_01: { displayName: 'Kaelen Reyes', handle: 'kaelen_cyber', aiPocketMoneyCentavos: 425000 },
+  usr_user_443: { displayName: 'Carlos Mendoza', handle: 'carlos_m', aiPocketMoneyCentavos: 150000 },
+  usr_user_882: { displayName: 'Mateo De Leon', handle: 'mateo_d', aiPocketMoneyCentavos: 80000 },
+  usr_user_991: { displayName: 'Althea Soriano', handle: 'althea_s', aiPocketMoneyCentavos: 210000 },
+};
+
 const DailyHabitContext = createContext<DailyHabitContextType | undefined>(undefined);
 
 export const DailyHabitProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -402,10 +411,15 @@ export const DailyHabitProvider: React.FC<{ children: React.ReactNode }> = ({ ch
 
   // Core State
   const [currentUser, setCurrentUser] = useState<UserProfile>(INITIAL_USER);
+  const [demoUserAccounts, setDemoUserAccounts] = useState(INITIAL_DEMO_ACCOUNTS);
   const [posts, setPosts] = useState<Post[]>(INITIAL_POSTS);
   const [reels, setReels] = useState<Reel[]>(INITIAL_REELS);
   const [activeReelIndex, setActiveReelIndex] = useState<number>(0);
-  const [dailyViewCount, setDailyViewCount] = useState<number>(14); // Out of 100 daily limit
+  const [dailyViewCount, setDailyViewCount] = useState<number>(0); // Predictable initial count: 0 of 100
+  const [claimedReelIdsToday, setClaimedReelIdsToday] = useState<string[]>([]);
+  const [simulatedDayManila, setSimulatedDayManila] = useState<string>(() =>
+    new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Manila' }).format(new Date())
+  );
   const [shop, setShop] = useState<AiShop>(INITIAL_SHOP);
   const [walletTransactions, setWalletTransactions] = useState<WalletTransaction[]>(INITIAL_TRANSACTIONS);
   const [receiptQueue, setReceiptQueue] = useState<PaymentReceiptReview[]>(INITIAL_RECEIPT_QUEUE);
@@ -457,22 +471,43 @@ export const DailyHabitProvider: React.FC<{ children: React.ReactNode }> = ({ ch
 
   const switchRole = (role: UserRole) => {
     setCurrentRole(role);
-    setCurrentUser((prev) => ({
-      ...prev,
-      role,
-      displayName:
+    setCurrentUser((prev) => {
+      const targetId =
+        role === 'MAIN_ADMIN'
+          ? 'usr_main_admin'
+          : role === 'ADMIN_ASSISTANT'
+          ? 'usr_danilo_asst'
+          : 'usr_kaelen_01';
+      const targetName =
         role === 'MAIN_ADMIN'
           ? 'System Master Admin'
           : role === 'ADMIN_ASSISTANT'
           ? 'Danilo Ramos (Verification Lead)'
-          : 'Kaelen Reyes',
-      handle:
+          : 'Kaelen Reyes';
+      const targetHandle =
         role === 'MAIN_ADMIN'
           ? 'main_admin_sys'
           : role === 'ADMIN_ASSISTANT'
           ? 'danilo_admin_asst'
-          : 'kaelen_cyber',
-    }));
+          : 'kaelen_cyber';
+
+      const targetCentavos =
+        role === 'USER'
+          ? (demoUserAccounts['usr_kaelen_01']?.aiPocketMoneyCentavos ?? prev.wallets.aiPocketMoneyCentavos)
+          : prev.wallets.aiPocketMoneyCentavos;
+
+      return {
+        ...prev,
+        id: targetId,
+        role,
+        displayName: targetName,
+        handle: targetHandle,
+        wallets: {
+          ...prev.wallets,
+          aiPocketMoneyCentavos: targetCentavos,
+        },
+      };
+    });
 
     // Auto-navigate to respective operational dashboard if switching roles
     if (role === 'ADMIN_ASSISTANT') {
@@ -584,18 +619,49 @@ export const DailyHabitProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     );
   };
 
+  const isReelClaimedToday = (reelId: string) => {
+    const currentManilaDay = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Manila' }).format(new Date());
+    if (currentManilaDay !== simulatedDayManila) {
+      return false;
+    }
+    return claimedReelIdsToday.includes(reelId);
+  };
+
   const claimReelReward = (reelId: string) => {
-    if (dailyViewCount >= 100) {
+    const currentManilaDay = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Manila' }).format(new Date());
+
+    // In-memory demo daily reset check using Asia/Manila calendar day
+    let activeClaimed = claimedReelIdsToday;
+    let activeCount = dailyViewCount;
+    if (currentManilaDay !== simulatedDayManila) {
+      setSimulatedDayManila(currentManilaDay);
+      activeClaimed = [];
+      activeCount = 0;
+      setClaimedReelIdsToday([]);
+      setDailyViewCount(0);
+    }
+
+    if (activeClaimed.includes(reelId)) {
       return {
         success: false,
-        message: 'Daily rewarded view cap reached (100/100 views in Asia/Manila calendar day). Session completed with 0 AIC.',
+        message: 'DEMO ONLY: Reward already claimed for this reel today (Asia/Manila simulated day). Each demonstration reel can only be claimed once per day in this session.',
+        coinsEarned: 0,
+      };
+    }
+
+    if (activeCount >= 100) {
+      return {
+        success: false,
+        message: 'Daily rewarded view cap reached (100/100 demo views in Asia/Manila calendar day). Session completed with 0 AIC.',
         coinsEarned: 0,
       };
     }
 
     // Award 5 AI Coins to user wallet
     const coinsToAward = 5;
-    setDailyViewCount((prev) => prev + 1);
+    const newCount = activeCount + 1;
+    setDailyViewCount(newCount);
+    setClaimedReelIdsToday([...activeClaimed, reelId]);
     setCurrentUser((prev) => ({
       ...prev,
       wallets: {
@@ -606,7 +672,7 @@ export const DailyHabitProvider: React.FC<{ children: React.ReactNode }> = ({ ch
 
     return {
       success: true,
-      message: `DEMO ONLY — NO REAL VALUE: Simulated playback completed. +${coinsToAward} demo AI Coins added to demo Shop Upgrades balance (${dailyViewCount + 1}/100 demo views). Demo coins carry zero cash value and cannot be withdrawn or converted to fiat.`,
+      message: `DEMO ONLY — NO REAL VALUE: Simulated playback completed. +${coinsToAward} demo AI Coins added to demo Shop Upgrades balance (${newCount}/100 demo views today). Demo coins carry zero cash value and cannot be withdrawn or converted to fiat.`,
       coinsEarned: coinsToAward,
     };
   };
@@ -822,8 +888,24 @@ export const DailyHabitProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     if (!item) return;
 
     if (decision === 'APPROVE') {
-      // 1. Credit the user's demo spendable AIPM
-      if (item.userId === currentUser.id) {
+      // 1. Credit the intended demo user's simulated balance in demo accounts registry
+      setDemoUserAccounts((prev) => {
+        const existing = prev[item.userId] || {
+          displayName: item.userDisplayName,
+          handle: item.userDisplayName.toLowerCase().replace(/\s+/g, '_'),
+          aiPocketMoneyCentavos: 0,
+        };
+        return {
+          ...prev,
+          [item.userId]: {
+            ...existing,
+            aiPocketMoneyCentavos: existing.aiPocketMoneyCentavos + item.amountCentavos,
+          },
+        };
+      });
+
+      // 2. If the current active persona matches the credited demo user, update active user balance
+      if (item.userId === currentUser.id || (item.userId === 'usr_kaelen_01' && (currentUser.id === 'usr_kaelen_01' || currentUser.role === 'USER'))) {
         setCurrentUser((prev) => ({
           ...prev,
           wallets: {
@@ -833,17 +915,17 @@ export const DailyHabitProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         }));
       }
 
-      // 2. Update queue status
+      // 3. Update queue status
       setReceiptQueue((prev) =>
         prev.map((r) => (r.id === receiptId ? { ...r, status: 'APPROVED' } : r))
       );
 
-      // 3. Log completed top-up transaction as demo only
+      // 4. Log completed top-up transaction as demo only
       const newTx: WalletTransaction = {
         id: `tx_${Date.now()}`,
         type: 'TOPUP',
         amountCentavos: item.amountCentavos,
-        description: `DEMO ONLY — Simulated GCash Top-Up (Ref: ${item.gcashReference}) — Demo Console Approved`,
+        description: `DEMO ONLY — Simulated GCash Top-Up for ${item.userDisplayName} (Ref: ${item.gcashReference}) — Demo Console Approved`,
         status: 'COMPLETED',
         date: 'Just now',
         referenceNumber: `DH-VAULT-${Math.floor(10000 + Math.random() * 90000)}`,
@@ -870,9 +952,9 @@ export const DailyHabitProvider: React.FC<{ children: React.ReactNode }> = ({ ch
 
     setChatMessages((prev) => [...prev, userMsg]);
 
-    // Simulated Intelligent Assistant Response
+    // Simulated Intelligent Assistant Response (Keyword-based mock demonstration — no live Gemini API)
     setTimeout(() => {
-      let reply = "I analyzed your request through the DAILYHABIT neural engine. How else may I assist with your creator strategy?";
+      let reply = "[SIMULATED AI RESPONSE — DEMO KEYWORD ENGINE (NO LIVE GEMINI API)] How may I assist with your creator strategy, AI Coins, or simulated shop tiers today?";
       let actions = [
         { label: 'Check AI Coins & Upgrade Shop', action: 'upgrade_shop' },
         { label: 'Review Demo AIPM Balance (DEMO ONLY)', action: 'view_wallet' },
@@ -934,11 +1016,13 @@ export const DailyHabitProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         setActiveReelIndex,
         toggleLikeReel,
         claimReelReward,
+        isReelClaimedToday,
         dailyViewCount,
         shop,
         upgradeShopTier,
         purchaseProduct,
         walletTransactions,
+        demoUserAccounts,
         requestSimulatedTopUp,
         requestSimulatedWithdrawal,
         promotePostWithAipm,

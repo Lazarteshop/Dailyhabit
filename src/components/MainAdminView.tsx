@@ -39,13 +39,13 @@ export const MainAdminView: React.FC = () => {
     (r) => r.status === 'APPROVED' || r.status === 'REJECTED'
   );
 
-  // Simulated BSP Solvency Metrics
-  const liquidVaultCashCentavos = 145000000; // ₱1,450,000.00 in Liquid Reserve
-  const spendableAipmLiabilities = 82500000; // ₱825,000.00 (Account 2010)
-  const withdrawalReservations = 9500000; // ₱95,000.00 (Account 2020)
-  const unearnedAdBudgets = 4200000; // ₱42,000.00 (Account 2030)
-  const assistantCommissionsPayable = 2100000; // ₱21,000.00 (Account 2040)
-  const pendingClearingHold = 3400000; // ₱34,000.00 (Account 2050)
+  // Simulated Demo Metrics (Fictional demonstration data)
+  const liquidVaultCashCentavos = 145000000; // ₱1,450,000.00 in Liquid Reserve (Demo Data)
+  const spendableAipmLiabilities = 82500000; // ₱825,000.00 (Account 2010 - Demo Data)
+  const withdrawalReservations = 9500000; // ₱95,000.00 (Account 2020 - Demo Data)
+  const unearnedAdBudgets = 4200000; // ₱42,000.00 (Account 2030 - Demo Data)
+  const assistantCommissionsPayable = 2100000; // ₱21,000.00 (Account 2040 - Demo Data)
+  const pendingClearingHold = 3400000; // ₱34,000.00 (Account 2050 - Demo Data)
 
   const totalUserLiabilities =
     spendableAipmLiabilities +
@@ -58,10 +58,11 @@ export const MainAdminView: React.FC = () => {
   const isSolvent = solvencyRatio >= 100;
 
   const handleDecision = (id: string, decision: 'APPROVE' | 'REJECT') => {
+    const item = receiptQueue.find((r) => r.id === id);
     mainAdminFinalDecision(id, decision);
     setFeedback(
       decision === 'APPROVE'
-        ? `✓ Simulated approval recorded in demo console. User credited with demo AIPM.`
+        ? `✓ Simulated approval recorded in demo console. Target user ${item?.userDisplayName || 'User'} (${item?.userId || ''}) credited with ₱${item ? (item.amountCentavos / 100).toFixed(2) : '0.00'} demo AIPM.`
         : `✓ Simulated rejection recorded. Zero liabilities credited.`
     );
     setTimeout(() => setFeedback(null), 5000);
@@ -123,7 +124,7 @@ export const MainAdminView: React.FC = () => {
         </div>
       )}
 
-      {/* Solvency Equation Card (v2.5.8 Formula 1 & 2 Invariants) */}
+      {/* Simulated Demo Metrics Card (v2.5.8 Formula 1 & 2 Invariants) */}
       <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 space-y-6 shadow-2xl relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl pointer-events-none" />
 
@@ -131,14 +132,14 @@ export const MainAdminView: React.FC = () => {
           <div className="space-y-1">
             <div className="flex items-center gap-2 text-xs font-bold text-amber-400 uppercase tracking-wider font-mono">
               <Scale className="w-4 h-4" />
-              SAMPLE DATA — NOT ACTUAL RESERVES OR REGULATORY APPROVAL
+              FICTIONAL DEMO DATA — NOT ACTUAL RESERVES OR REGULATORY APPROVAL
             </div>
             <h2 className="text-xl font-bold text-white">
-              Simulated Reserve Solvency vs System Obligations
+              Simulated Demo Metrics: Model Balance Sheet & System Obligations
             </h2>
           </div>
           <div className="text-right">
-            <div className="text-xs text-slate-400 uppercase font-mono tracking-wider">Simulated Solvency Ratio</div>
+            <div className="text-xs text-slate-400 uppercase font-mono tracking-wider">Simulated Reserve Ratio (Demo Metric)</div>
             <div className={`text-2xl font-black font-mono ${isSolvent ? 'text-emerald-400' : 'text-rose-400'}`}>
               {solvencyRatio.toFixed(1)}% <span className="text-xs font-medium text-slate-400">(Model Benchmark: 100.0%)</span>
             </div>
@@ -261,7 +262,7 @@ export const MainAdminView: React.FC = () => {
                   <div className="flex items-center justify-between text-[10px] text-slate-400">
                     <span>Screened by: {r.assignedAssistantName || 'Danilo Ramos'}</span>
                     <span className="text-purple-400 font-mono font-bold">
-                      Comm: ₱{(r.commissionCentavos / 100).toFixed(2)}
+                      Simulated Comm (Demo Only): ₱{(r.commissionCentavos / 100).toFixed(2)}
                     </span>
                   </div>
                   <p className="text-slate-300 italic">
@@ -307,7 +308,7 @@ export const MainAdminView: React.FC = () => {
       <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 space-y-4">
         <h3 className="text-sm font-bold text-white flex items-center gap-2">
           <History className="w-4 h-4 text-slate-400" />
-          Recent Fiduciary Sign-offs
+          Recent Simulated Sign-offs (Demo History)
         </h3>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs text-slate-400">
@@ -316,7 +317,7 @@ export const MainAdminView: React.FC = () => {
                 <th className="py-2.5 px-3">Transaction</th>
                 <th className="py-2.5 px-3">Sender</th>
                 <th className="py-2.5 px-3">Amount</th>
-                <th className="py-2.5 px-3">Commission Accrued</th>
+                <th className="py-2.5 px-3">Simulated Comm. (Demo Only)</th>
                 <th className="py-2.5 px-3 text-right">Status</th>
               </tr>
             </thead>

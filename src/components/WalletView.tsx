@@ -76,10 +76,10 @@ export const WalletView: React.FC = () => {
         <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
         <div className="text-xs space-y-1">
           <p className="font-bold text-amber-300 font-mono uppercase tracking-wide">
-            SIMULATED DUAL WALLET ARCHITECTURE — NO REAL MONEY / ZERO BILLING
+            SIMULATED DEMO ONLY — NO REAL MONEY, NO REAL STORED VALUE, NO ACTUAL PAYMENT OR WITHDRAWAL.
           </p>
           <p className="text-slate-300 leading-relaxed">
-            All fiat and token balances displayed below are in-memory demo records. AI Coins are non-cash utility credits for AI SHOP creation and tier upgrades. AI Pocket Money (AIPM): SIMULATED DEMO EQUIVALENCE ONLY — NO REAL STORED VALUE.
+            All fiat and token balances displayed below are in-memory demo records. AI Coins are non-cash utility credits for AI SHOP creation and tier upgrades. AI Pocket Money (AIPM) represents demo balance only (1 AIPM = 1.00 PHP Demo Reference Only).
           </p>
         </div>
       </div>
@@ -96,7 +96,7 @@ export const WalletView: React.FC = () => {
               </div>
               <div>
                 <h2 className="text-base font-display font-bold text-white">AI Coins (AIC)</h2>
-                <span className="text-[10px] font-mono text-cyan-400">In-App Utility Token</span>
+                <span className="text-[10px] font-mono text-cyan-400">In-App Utility Token — Demo Only</span>
               </div>
             </div>
 
@@ -146,13 +146,17 @@ export const WalletView: React.FC = () => {
               </div>
               <div>
                 <h2 className="text-base font-display font-bold text-white">AI Pocket Money (AIPM)</h2>
-                <span className="text-[10px] font-mono text-emerald-400 font-semibold block">SIMULATED DEMO EQUIVALENCE ONLY — NO REAL STORED VALUE</span>
+                <span className="text-[10px] font-mono text-emerald-400 font-semibold block">1 AIPM = 1.00 PHP (Demo Reference Only)</span>
               </div>
             </div>
 
-            <span className="px-2.5 py-1 rounded-full bg-emerald-950 border border-emerald-400/50 text-[9px] font-mono font-bold text-emerald-300 uppercase tracking-wider text-right">
-              SIMULATED DEMO EQUIVALENCE ONLY — NO REAL STORED VALUE
+            <span className="px-2.5 py-1 rounded-full bg-emerald-950 border border-emerald-400/50 text-[10px] font-mono font-bold text-emerald-300 uppercase tracking-wider">
+              SIMULATED DEMO VALUE
             </span>
+          </div>
+
+          <div className="p-2.5 bg-emerald-950/40 border border-emerald-500/30 rounded-xl text-[10px] font-mono text-emerald-300">
+            SIMULATED DEMO ONLY — NO REAL MONEY, NO REAL STORED VALUE, NO ACTUAL PAYMENT OR WITHDRAWAL.
           </div>
 
           <div>
